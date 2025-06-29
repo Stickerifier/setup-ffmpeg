@@ -18,6 +18,7 @@ export class EvermeetCxInstaller {
     this.version = version;
     this.toolCacheDir = toolCacheDir;
   }
+
   /**
    * @param url {string}
    * @private
@@ -36,6 +37,7 @@ export class EvermeetCxInstaller {
       checksumUrl: data.download.zip.sig,
     };
   }
+
   /**
    * @param version {string}
    * @param isGitRelease {boolean}
@@ -59,6 +61,7 @@ export class EvermeetCxInstaller {
       checksumUrl: [ffmpeg.checksumUrl, ffprobe.checksumUrl],
     };
   }
+
   /**
    * @returns {Promise<import('./installer').ReleaseInfo>}
    */
@@ -68,6 +71,7 @@ export class EvermeetCxInstaller {
     const release = await this.getRelease(releaseType, isGitRelease);
     return {...release, isGitRelease};
   }
+
   /**
    * @returns {Promise<import('./installer').ReleaseInfo[]>}
    */
@@ -81,6 +85,7 @@ export class EvermeetCxInstaller {
     }
     return releases;
   }
+
   /**
    * @param {import('./installer').ReleaseInfo} release
    * @returns {Promise<import('./installer').InstalledTool>}

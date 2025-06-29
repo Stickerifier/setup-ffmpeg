@@ -23,6 +23,7 @@ export class GyanInstaller {
     });
     assert.ok(['static', 'shared'].includes(linkingType), 'Invalid linking type');
   }
+
   /**
    * @returns {Promise<import('./installer').ReleaseInfo>}
    */
@@ -51,6 +52,7 @@ export class GyanInstaller {
       checksumUrl: [downloadUrl + '.sha256'],
     };
   }
+
   /**
    * @returns {Promise<import('./installer').ReleaseInfo[]>}
    */
@@ -76,6 +78,7 @@ export class GyanInstaller {
         ],
       }));
   }
+
   /**
    * @param release {import('./installer').ReleaseInfo}
    * @returns {Promise<import('./installer').InstalledTool>}

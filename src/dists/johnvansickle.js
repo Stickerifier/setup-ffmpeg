@@ -20,6 +20,7 @@ export class JohnVanSickleInstaller {
     assert.ok(this.arch === 'x64' || this.arch === 'arm64', 'Only x64 and arm64 are supported');
     assert.strictEqual(linkingType, 'static', 'Only static linking is supported');
   }
+
   /**
    * @returns {Promise<import('./installer').ReleaseInfo>}
    */
@@ -48,6 +49,7 @@ export class JohnVanSickleInstaller {
       checksumUrl: [downloadUrl + '.md5'],
     };
   }
+
   /**
    * @returns {Promise<import('./installer').ReleaseInfo?>}
    */
@@ -79,10 +81,11 @@ export class JohnVanSickleInstaller {
       downloadUrl: [res.url],
     };
   }
+
   /**
    * johnvansickle.com does not provide any way to get a list of available
    * versions except very old ones and the latest ones.
-   * The given version is matched exactly so at most two results are returned.
+   * The given version is matched exactly so, at most, two results are returned.
    * Latest version and fixed version.
    *
    * @returns {Promise<import('./installer').ReleaseInfo[]>}
@@ -95,31 +98,12 @@ export class JohnVanSickleInstaller {
     }
     return releases;
   }
-  // /**
-  //  * @param {ReleaseInfo} release
-  //  * @param {string} archivePath
-  //  */
-  // async verifyChecksum(release, archivePath) {
-  //   if (this.skipIntegrityCheck || !release.checksumUrl) return true;
-  //   const res = await fetch(release.checksumUrl, {
-  //     headers: {
-  //       'user-agent': USER_AGENT,
-  //     },
-  //   });
-  //   const checksumText = res.ok && (await res.text());
-  //   assert.ok(checksumText, 'Cannot download checksum');
-  //   const checksum = checksumText.split(' ')[0].trim().toLowerCase();
-  //   const hash = createHash('md5');
-  //   hash.setEncoding('hex');
-  //   await pipeline(createReadStream(archivePath), hash);
-  //   const readhash = hash.read();
-  //   console.log(readhash, checksum);
-  //   return readhash === checksum;
-  // }
+
   /** @private */
   getArch() {
     return this.arch === 'x64' ? 'amd64' : this.arch;
   }
+
   /**
    * @param {import('./installer').ReleaseInfo} release
    * @returns {Promise<import('./installer').InstalledTool>}
