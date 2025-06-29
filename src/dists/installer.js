@@ -13,7 +13,6 @@ import {EvermeetCxInstaller} from './evermeet.cx';
  * @typedef {object} InstallerOptions
  * @property {string} version
  * @property {string} arch
- * @property {boolean} [skipIntegrityCheck]
  * @property {string} toolCacheDir
  * @property {string} [githubToken]
  * @property {string} linkingType

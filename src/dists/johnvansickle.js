@@ -12,10 +12,9 @@ export class JohnVanSickleInstaller {
   /**
    * @param {import('./installer').InstallerOptions} options
    */
-  constructor({version, arch, skipIntegrityCheck, toolCacheDir, linkingType}) {
+  constructor({version, arch, toolCacheDir, linkingType}) {
     this.version = version;
     this.arch = arch;
-    this.skipIntegrityCheck = skipIntegrityCheck;
     this.toolCacheDir = toolCacheDir;
     assert.ok(this.arch === 'x64' || this.arch === 'arm64', 'Only x64 and arm64 are supported');
     assert.strictEqual(linkingType, 'static', 'Only static linking is supported');
@@ -71,6 +70,15 @@ export class JohnVanSickleInstaller {
     if (!res.ok) {
       res = await fetch(
         `https://johnvansickle.com/ffmpeg/old-releases/ffmpeg-${version}-${this.getArch()}-static.tar.xz`,
+        init,
+      );
+    }
+    if (!res.ok) {
+      // Fallback to BtbN
+      const btbnVersion = version.substring(0, version.lastIndexOf('.'));
+      const btbnArch = this.arch === 'x64' ? '64' : this.arch;
+      res = await fetch(
+        `https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-n${btbnVersion}-latest-linux${btbnArch}-gpl-${btbnVersion}.tar.xz`,
         init,
       );
     }
