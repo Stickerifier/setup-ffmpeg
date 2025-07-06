@@ -77,10 +77,11 @@ export class JohnVanSickleInstaller {
       // Fallback to BtbN
       const btbnVersion = version.substring(0, version.lastIndexOf('.'));
       const btbnArch = this.arch === 'x64' ? '64' : this.arch;
-      res = await fetch(
-        `https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-n${btbnVersion}-latest-linux${btbnArch}-gpl-${btbnVersion}.tar.xz`,
-        init,
-      );
+      const btbnUrl = `https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-n${btbnVersion}-latest-linux${btbnArch}-gpl-${btbnVersion}.tar.xz`;
+
+      core.debug(`Retrieving FFmpeg from BtbN: ${btbnUrl}`);
+
+      res = await fetch(btbnUrl, init);
     }
     if (!res.ok) return null;
     core.debug(`Found johnvansickle release: ${version}`);
