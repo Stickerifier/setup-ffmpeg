@@ -62,29 +62,17 @@ export class JohnVanSickleInstaller {
       },
       redirect: 'manual',
     };
-    let res = await fetch(
-      `https://johnvansickle.com/ffmpeg/releases/ffmpeg-${version}-${this.getArch()}-static.tar.xz`,
-      init,
-    );
-    // Check in old releases if not available
-    if (!res.ok) {
-      res = await fetch(
-        `https://johnvansickle.com/ffmpeg/old-releases/ffmpeg-${version}-${this.getArch()}-static.tar.xz`,
-        init,
-      );
-    }
-    if (!res.ok) {
-      // Fallback to BtbN
-      const btbnVersion = version.substring(0, version.lastIndexOf('.'));
-      const btbnArch = this.arch === 'x64' ? '64' : this.arch;
-      const btbnUrl = `https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-n${btbnVersion}-latest-linux${btbnArch}-gpl-${btbnVersion}.tar.xz`;
+    // Fallback to BtbN
+    const btbnVersion = version.substring(0, version.lastIndexOf('.'));
+    const btbnArch = this.arch === 'x64' ? '64' : this.arch;
+    const btbnUrl = `https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-n${btbnVersion}-latest-linux${btbnArch}-gpl-${btbnVersion}.tar.xz`;
 
-      core.debug(`Retrieving FFmpeg from BtbN: ${btbnUrl}`);
+    core.debug(`Retrieving FFmpeg from BtbN: ${btbnUrl}`);
 
-      res = await fetch(btbnUrl, init);
-    }
+    let res = await fetch(btbnUrl, init);
+
     if (!res.ok) return null;
-    core.debug(`Found johnvansickle release: ${version}`);
+    core.debug(`Found BtbN release: ${btbnVersion}`);
     return {
       version: normalizeVersion(version, false),
       downloadUrl: [res.url],
